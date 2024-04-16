@@ -453,9 +453,6 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-certs
+/certs
 /data
-/grafana
-/prometheus
-Server/IdentityService/keys
-IdentityService/IdentityService/keys/is-signing-key-4FCFA6535026623A459259428DD7FCEC.json
+src/IdentityManagement/IdentityManagement/keys

@@ -8,12 +8,12 @@ using YourBrand.Application.Common.Models;
 
 namespace YourBrand.Application.Users.Queries;
 
-public record GetUsersQuery(int Page = 0, int PageSize = 10, string? SearchString = null, string? SortBy = null, Application.Common.Models.SortDirection? SortDirection = null) : IRequest<Results<UserDto>>
+public record GetUsersQuery(int Page = 0, int PageSize = 10, string? SearchString = null, string? SortBy = null, Application.Common.Models.SortDirection? SortDirection = null) : IRequest<ItemResult<UserDto>>
 {
 
-    public class GetUsersQueryHandler(IAppServiceContext context) : IRequestHandler<GetUsersQuery, Results<UserDto>>
+    public class GetUsersQueryHandler(IAppServiceContext context) : IRequestHandler<GetUsersQuery, ItemResult<UserDto>>
     {
-        public async Task<Results<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public async Task<ItemResult<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var query = context.Users
                 .OrderBy(p => p.Created)
@@ -45,7 +45,7 @@ public record GetUsersQuery(int Page = 0, int PageSize = 10, string? SearchStrin
 
             var dtos = users.Select(user => new UserDto(user.Id, user.FirstName, user.LastName, user.DisplayName, user.SSN, user.Email, user.Created, user.Deleted));
 
-            return new Results<UserDto>(dtos, totalItems);
+            return new ItemResult<UserDto>(dtos, totalItems);
         }
     }
 }

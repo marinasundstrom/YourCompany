@@ -49,6 +49,21 @@ builder.Services.AddOutputCache(options =>
     });
 });
 
+string MyAllowSpecificOrigins = "MyPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder
+                              .AllowAnyOrigin()
+                              .AllowAnyHeader()
+                              .AllowAnyMethod()
+                              .SetIsOriginAllowedToAllowWildcardSubdomains();
+                      });
+});
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDiscoveryClient();
@@ -132,6 +147,8 @@ if (app.Environment.IsDevelopment())
 app.UseOutputCache();
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 

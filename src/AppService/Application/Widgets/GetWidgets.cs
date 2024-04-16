@@ -7,11 +7,11 @@ using YourBrand.Application.Common.Models;
 
 namespace YourBrand.Application.Widgets;
 
-public record GetWidgets(int Page = 1, int PageSize = 10, string? SortBy = null, Application.Common.Models.SortDirection? SortDirection = null) : IRequest<Results<WidgetDto>>
+public record GetWidgets(int Page = 1, int PageSize = 10, string? SortBy = null, Application.Common.Models.SortDirection? SortDirection = null) : IRequest<ItemResult<WidgetDto>>
 {
-    public class Handler(IAppServiceContext context) : IRequestHandler<GetWidgets, Results<WidgetDto>>
+    public class Handler(IAppServiceContext context) : IRequestHandler<GetWidgets, ItemResult<WidgetDto>>
     {
-        public async Task<Results<WidgetDto>> Handle(GetWidgets request, CancellationToken cancellationToken)
+        public async Task<ItemResult<WidgetDto>> Handle(GetWidgets request, CancellationToken cancellationToken)
         {
             var query = context.Widgets.AsQueryable();
 
@@ -48,7 +48,7 @@ public record GetWidgets(int Page = 1, int PageSize = 10, string? SortBy = null,
                 .Take(request.PageSize).AsQueryable()
                 .ToArrayAsync(cancellationToken);
 
-            return new Results<WidgetDto>(widgets.Select(x => x.ToDto()), totalCount);
+            return new ItemResult<WidgetDto>(widgets.Select(x => x.ToDto()), totalCount);
         }
     }
 }

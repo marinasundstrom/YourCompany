@@ -1,6 +1,6 @@
 # Getting started
 
-* Portal: https://localhost:5174/ (Actually the reverse proxy)
+* Portal: https://acme.yourbrand.local:5174/ (Actually the reverse proxy)
 * Identity Management: https://localhost:5040/
 * Store: https://localhost:7188/
 
@@ -70,7 +70,7 @@ You have to create a company in the Portal, in ``Administration > Set up``.
 Default credentials:
 
 ```
-AliceSmith@email.com
+alice / bob
 Pass123$
 ```
 

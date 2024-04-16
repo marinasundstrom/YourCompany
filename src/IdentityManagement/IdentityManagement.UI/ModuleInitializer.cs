@@ -18,7 +18,7 @@ public class ModuleInitializer : IModuleInitializer
         services.AddIdentityManagementClients((sp, httpClient) =>
         {
             var navigationManager = sp.GetRequiredService<NavigationManager>();
-            httpClient.BaseAddress = new Uri($"{ServiceUrls.IdentityManagementServiceUrl}/");
+            httpClient.BaseAddress = new Uri($"https://acme.yourbrand.local:5174/api/identityservice/");
         }, builder =>
         {
             builder.AddHttpMessageHandler<CustomAuthorizationMessageHandler>();

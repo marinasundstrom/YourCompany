@@ -19,7 +19,6 @@ using YourBrand.Tenancy;
 
 string MyAllowSpecificOrigins = "MyPolicy";
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 string ServiceName = "Identity Management";
@@ -71,9 +70,12 @@ builder.Services.AddCors(options =>
                       builder =>
                       {
                           builder
-                              .AllowAnyOrigin()
-                              .AllowAnyHeader()
-                              .AllowAnyMethod();
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("https://yourbrand.local:5174", "https://*.yourbrand.local:5174")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader()
+                            .Build();
                       });
 });
 

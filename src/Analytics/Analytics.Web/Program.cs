@@ -64,7 +64,10 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("https://localhost:5174", "https://localhost:5001")
-                          .AllowAnyHeader().AllowAnyMethod();
+                            .AllowAnyHeader().AllowAnyMethod();
+
+                          policy.WithOrigins("https://yourbrand.local", "https://*.yourbrand.local")
+                            .SetIsOriginAllowedToAllowWildcardSubdomains();
                       });
 });
 

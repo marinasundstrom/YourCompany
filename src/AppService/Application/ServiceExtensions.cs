@@ -18,7 +18,7 @@ public static class ServiceExtensions
 
         services.AddNotificationsClients((sp, http) =>
         {
-            http.BaseAddress = new Uri("https://localhost:5174/api/notifications/");
+            http.BaseAddress = new Uri("https://localhost:5030/");
         },
         builder =>
         {

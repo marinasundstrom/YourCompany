@@ -2,7 +2,7 @@ namespace YourBrand.Portal;
 
 public static class ServiceUrls
 {
-    public const string RootUrl = "https://localhost:5174/api";
+    public const string RootUrl = "https://yourbrand.local:5174/api";
 
     public const string ApiKeysServiceUrl = $"{RootUrl}/apikeys";
 

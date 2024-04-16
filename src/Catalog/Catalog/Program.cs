@@ -28,6 +28,7 @@ using YourBrand.Identity;
 using YourBrand.Integration;
 using YourBrand.Tenancy;
 
+
 string ServiceName = "Catalog";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +49,23 @@ builder.Services.AddOutputCache(options =>
     options.AddGetProductByIdPolicy();
 });
 
+
+string MyAllowSpecificOrigins = "MyPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("https://yourbrand.local:5174", "https://*.yourbrand.local:5174")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader()
+                            .Build();
+                      });
+});
 
 if (builder.Environment.IsProduction())
 {
@@ -193,6 +211,10 @@ if (app.Environment.IsDevelopment())
 app.UseOutputCache();
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 

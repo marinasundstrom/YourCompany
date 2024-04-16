@@ -1,10 +1,16 @@
 ﻿namespace YourBrand.IdentityManagement.Contracts;
 
+public record Organization(string Id, string Name, string? FriendlyName);
+
 public record CreateOrganization
 {
     public string Name { get; init; }
     public string? FriendlyName { get; init; }
 }
+
+public record GetOrganizations();
+
+public record GetOrganizationsResponse(IEnumerable<Organization> Items, int Total);
 
 public record GetOrganization(string OrganizationId, string RequestedById);
 

@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 
-using YourBrand.IdentityManagement.Client;
+using YourBrand.AppService.Client;
 using YourBrand.Portal.Services;
 
 namespace YourBrand.Portal;
@@ -12,7 +12,7 @@ public sealed class OrganizationProvider(IOrganizationsClient organizationsClien
 
     public async Task<IEnumerable<Portal.Services.Organization>> GetAvailableOrganizationsAsync(CancellationToken cancellationToken = default)
     {
-        _organizations = (await organizationsClient.GetOrganizationsAsync(0, null, null, null, null, cancellationToken)).Items
+        _organizations = (await organizationsClient.GetOrganizationsAsync(0, null, null, null, cancellationToken)).Items
             .Select(x => new Portal.Services.Organization(x.Id, x.Name, x.FriendlyName));
 
         _currentOrganization = await GetCurrentOrganizationAsync(cancellationToken);

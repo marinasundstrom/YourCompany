@@ -8,11 +8,11 @@ using YourBrand.Application.Common.Models;
 namespace YourBrand.Application.Search.Commands;
 
 public record SearchCommand(string SearchText,
-        int Page, int PageSize, string? SortBy = null, Application.Common.Models.SortDirection? SortDirection = null) : IRequest<Results<SearchResultItem>>
+        int Page, int PageSize, string? SortBy = null, Application.Common.Models.SortDirection? SortDirection = null) : IRequest<ItemResult<SearchResultItem>>
 {
-    public class SearchCommandHandler(IAppServiceContext context) : IRequestHandler<SearchCommand, Results<SearchResultItem>>
+    public class SearchCommandHandler(IAppServiceContext context) : IRequestHandler<SearchCommand, ItemResult<SearchResultItem>>
     {
-        public async Task<Results<SearchResultItem>> Handle(SearchCommand request, CancellationToken cancellationToken)
+        public async Task<ItemResult<SearchResultItem>> Handle(SearchCommand request, CancellationToken cancellationToken)
         {
             var searchText = request.SearchText.Trim().ToLower();
 
@@ -42,7 +42,7 @@ public record SearchCommand(string SearchText,
 
             var resultItems = await projectedQuery.ToListAsync(cancellationToken);
 
-            return new Results<SearchResultItem>(
+            return new ItemResult<SearchResultItem>(
                 resultItems,
                 totalCount);
         }

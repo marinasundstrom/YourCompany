@@ -1,0 +1,22 @@
+[req]
+default_bits = 1024
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+x509_extensions = v3_req
+prompt  = no
+
+[req_distinguished_name]
+countryName                = SE
+stateOrProvinceName        = Skane
+localityName               = Malmo
+organizationName           = NA
+commonName                 = yourbrand.local
+
+[v3_req]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = yourbrand.local
+DNS.2 = *.yourbrand.local

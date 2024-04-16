@@ -11,7 +11,8 @@ public static class ServiceExtensions
             .AddSearchClient(configureClient, builder)
             .AddModulesClient(configureClient, builder)
             .AddDoSomethingClient(configureClient, builder)
-            .AddWidgetsClient(configureClient, builder);
+            .AddWidgetsClient(configureClient, builder)
+            .AddOrganizationsClient(configureClient, builder);
 
         return services;
     }
@@ -77,6 +78,17 @@ public static class ServiceExtensions
         var b = services
             .AddHttpClient(nameof(WidgetsClient), configureClient)
             .AddTypedClient<IWidgetsClient>((http, sp) => new WidgetsClient(http));
+
+        builder?.Invoke(b);
+
+        return services;
+    }
+
+    public static IServiceCollection AddOrganizationsClient(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient, Action<IHttpClientBuilder>? builder = null)
+    {
+        var b = services
+            .AddHttpClient(nameof(OrganizationsClient), configureClient)
+            .AddTypedClient<IOrganizationsClient>((http, sp) => new OrganizationsClient(http));
 
         builder?.Invoke(b);
 

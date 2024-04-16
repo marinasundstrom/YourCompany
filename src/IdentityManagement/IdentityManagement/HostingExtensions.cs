@@ -1,4 +1,5 @@
 using Duende.IdentityServer;
+using Duende.IdentityServer.Services;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ internal static class HostingExtensions
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<User>()
+            //.AddCorsPolicyService<DefaultCorsPolicyService>()
             .AddExtensionGrantValidator<TokenExchangeGrantValidator>()
             .AddProfileService<CustomProfileService<User>>();
 
@@ -76,11 +78,13 @@ internal static class HostingExtensions
         app.UseStaticFiles();
         app.UseRouting();
 
-        //app.UseAuthentication();
+        app.UseCors("MyPolicy");
+
+        app.UseAuthentication();
+        
+        app.UseAuthorization();
 
         app.UseIdentityServer();
-
-        app.UseAuthorization();
 
         app.MapControllers();
 

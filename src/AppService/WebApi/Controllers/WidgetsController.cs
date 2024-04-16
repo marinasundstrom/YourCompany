@@ -17,10 +17,10 @@ namespace YourBrand.WebApi.Controllers;
 public sealed class WidgetsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Results<WidgetDto>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ItemResult<WidgetDto>))]
     [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     [ProducesDefaultResponseType]
-    public async Task<Results<WidgetDto>> GetWidgets(int page = 1, int pageSize = 10, string? sortBy = null, Application.Common.Models.SortDirection? sortDirection = null, CancellationToken cancellationToken = default)
+    public async Task<ItemResult<WidgetDto>> GetWidgets(int page = 1, int pageSize = 10, string? sortBy = null, Application.Common.Models.SortDirection? sortDirection = null, CancellationToken cancellationToken = default)
         => await mediator.Send(new GetWidgets(page, pageSize, sortBy, sortDirection), cancellationToken);
 
     /*

@@ -10,7 +10,9 @@ public class CustomAuthorizationMessageHandler : AuthorizationMessageHandler
     {
         ConfigureHandler(
             authorizedUrls: [
-                "https://localhost:5174"
+                "https://localhost:5174",
+                "https://yourbrand.local:5174",
+                "https://acme.yourbrand.local:5174"
             ],
             scopes: ["myapi"]);
     }

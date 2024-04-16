@@ -65,10 +65,10 @@ public static class Config
                 AllowedGrantTypes = GrantTypes.Code,
                 RequirePkce = true,
                 RequireClientSecret = false,
-                AllowedCorsOrigins = { "https://localhost:5174" },
+                AllowedCorsOrigins = [ "https://localhost:5174", "https://yourbrand.local:5174", "https://acme.yourbrand.local:5174" ],
                 AllowedScopes = [ "openid", "profile", "email", "myapi", "tenant" ],
-                RedirectUris = [ "https://localhost:5174/authentication/login-callback" ],
-                PostLogoutRedirectUris = [ "https://localhost:5174/" ],
+                RedirectUris = [ "https://acme.yourbrand.local:5174/authentication/login-callback" ],
+                PostLogoutRedirectUris = [ "https://acme.yourbrand.local:5174" ],
                 Enabled = true
             },
             new Duende.IdentityServer.Models.Client

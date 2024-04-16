@@ -20,8 +20,6 @@ public record GetOrganizationsQuery(int Page = 0, int PageSize = 10, string? Sea
             var query = context.Organizations
                 .Include(x => x.Tenant)
                 .OrderBy(p => p.Created)
-                .Skip(request.PageSize * request.Page)
-                .Take(request.PageSize)
                 .AsNoTracking()
                 .AsSplitQuery();
 
@@ -39,6 +37,8 @@ public record GetOrganizationsQuery(int Page = 0, int PageSize = 10, string? Sea
             }
 
             var organizations = await query
+                .Skip(request.PageSize * (request.Page - 1))
+                .Take(request.PageSize)
                 .ToListAsync(cancellationToken);
 
             var dtos = organizations.Select(organization => organization.ToDto());

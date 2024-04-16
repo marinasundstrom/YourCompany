@@ -1,0 +1,517 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "P8E80F9AEF21F6940"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Application"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 141
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 218
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Message"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 477
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SourceContext"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 209
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 22,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time"
+          }
+        ]
+      },
+      "pluginVersion": "9.5.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "editorMode": "builder",
+          "expr": "{Application=\"Store.Web\"} |= ``",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Store.Web",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "json",
+            "jsonPaths": [
+              {
+                "path": "Application"
+              }
+            ],
+            "source": "labels"
+          }
+        },
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "json",
+            "jsonPaths": [
+              {
+                "path": ""
+              }
+            ],
+            "source": "Line"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "0": true,
+              "Line": true,
+              "MessageTemplate": true,
+              "PathBase": true,
+              "Renderings": false,
+              "RequestMethod": true,
+              "RequestPath": true,
+              "Time": false,
+              "commandText": true,
+              "commandTimeout": true,
+              "commandType": true,
+              "contextType": true,
+              "database": true,
+              "elapsed": true,
+              "executionType": true,
+              "id": true,
+              "labels": true,
+              "level": false,
+              "newLine": true,
+              "options": true,
+              "parameters": true,
+              "provider": true,
+              "providerVersion": true,
+              "savedCount": true,
+              "server": true,
+              "tsNs": true,
+              "version": true
+            },
+            "indexByName": {
+              "0": 23,
+              "Application": 2,
+              "AuthenticationScheme": 16,
+              "ConnectionId": 27,
+              "ContentLength": 18,
+              "ContentType": 17,
+              "Elapsed": 30,
+              "ElapsedMilliseconds": 25,
+              "Environment": 28,
+              "EventId": 26,
+              "Host": 11,
+              "Line": 19,
+              "Message": 4,
+              "MessageTemplate": 24,
+              "Method": 7,
+              "Path": 13,
+              "PathBase": 12,
+              "Protocol": 9,
+              "QueryString": 14,
+              "Renderings": 29,
+              "RequestId": 5,
+              "RequestMethod": 8,
+              "RequestPath": 6,
+              "Scheme": 10,
+              "SourceContext": 3,
+              "StatusCode": 15,
+              "Time": 0,
+              "commandText": 40,
+              "commandTimeout": 38,
+              "commandType": 37,
+              "contextType": 34,
+              "database": 31,
+              "elapsed": 33,
+              "executionType": 41,
+              "id": 21,
+              "labels": 22,
+              "level": 1,
+              "newLine": 39,
+              "options": 45,
+              "parameters": 36,
+              "provider": 43,
+              "providerVersion": 44,
+              "savedCount": 35,
+              "server": 32,
+              "tsNs": 20,
+              "version": 42
+            },
+            "renameByName": {
+              "level": "Level"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "P8E80F9AEF21F6940"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Application"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 141
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 218
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Message"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 477
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SourceContext"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 209
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 22,
+        "x": 0,
+        "y": 13
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time"
+          }
+        ]
+      },
+      "pluginVersion": "9.5.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "editorMode": "builder",
+          "expr": "{Application=\"Admin.Web\"} |= ``",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Admin.Web",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "json",
+            "jsonPaths": [
+              {
+                "path": "Application"
+              }
+            ],
+            "source": "labels"
+          }
+        },
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "json",
+            "jsonPaths": [
+              {
+                "path": ""
+              }
+            ],
+            "source": "Line"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "0": true,
+              "Line": true,
+              "MessageTemplate": true,
+              "PathBase": true,
+              "Renderings": false,
+              "RequestMethod": true,
+              "RequestPath": true,
+              "Time": false,
+              "commandText": true,
+              "commandTimeout": true,
+              "commandType": true,
+              "contextType": true,
+              "database": true,
+              "elapsed": true,
+              "executionType": true,
+              "id": true,
+              "labels": true,
+              "level": false,
+              "newLine": true,
+              "options": true,
+              "parameters": true,
+              "provider": true,
+              "providerVersion": true,
+              "savedCount": true,
+              "server": true,
+              "tsNs": true,
+              "version": true
+            },
+            "indexByName": {
+              "0": 23,
+              "Application": 2,
+              "AuthenticationScheme": 16,
+              "ConnectionId": 27,
+              "ContentLength": 18,
+              "ContentType": 17,
+              "Elapsed": 30,
+              "ElapsedMilliseconds": 25,
+              "Environment": 28,
+              "EventId": 26,
+              "Host": 11,
+              "Line": 19,
+              "Message": 4,
+              "MessageTemplate": 24,
+              "Method": 7,
+              "Path": 13,
+              "PathBase": 12,
+              "Protocol": 9,
+              "QueryString": 14,
+              "Renderings": 29,
+              "RequestId": 5,
+              "RequestMethod": 8,
+              "RequestPath": 6,
+              "Scheme": 10,
+              "SourceContext": 3,
+              "StatusCode": 15,
+              "Time": 0,
+              "commandText": 40,
+              "commandTimeout": 38,
+              "commandType": 37,
+              "contextType": 34,
+              "database": 31,
+              "elapsed": 33,
+              "executionType": 41,
+              "id": 21,
+              "labels": 22,
+              "level": 1,
+              "newLine": 39,
+              "options": 45,
+              "parameters": 36,
+              "provider": 43,
+              "providerVersion": 44,
+              "savedCount": 35,
+              "server": 32,
+              "tsNs": 20,
+              "version": 42
+            },
+            "renameByName": {
+              "level": "Level"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Logs",
+  "uid": "e3db071a-7f13-44ff-9dca-2838ba4035e4",
+  "version": 1,
+  "weekStart": ""
+}

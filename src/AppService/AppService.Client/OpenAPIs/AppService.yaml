@@ -148,6 +148,47 @@ paths:
               schema:
                 type: string
                 format: binary
+  /v1/Organizations:
+    get:
+      tags:
+      - Organizations
+      operationId: Organizations_GetOrganizations
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 5
+        x-position: 2
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+          nullable: true
+        x-position: 3
+      - name: sortDirection
+        in: query
+        schema:
+          oneOf:
+          - nullable: true
+            oneOf:
+            - $ref: '#/components/schemas/SortDirection'
+        x-position: 4
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemResultOfOrganization'
   /v1/Search:
     post:
       tags:
@@ -193,7 +234,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResultsOfSearchResultItem'
+                $ref: '#/components/schemas/ItemResultOfSearchResultItem'
   /v1/Setup:
     post:
       tags:
@@ -271,7 +312,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResultsOfWidget'
+                $ref: '#/components/schemas/ItemResultOfWidget'
         429:
           description: ''
           content:
@@ -329,7 +370,7 @@ components:
           additionalProperties: {}
     NotificationsResults:
       allOf:
-      - $ref: '#/components/schemas/ResultsOfNotification'
+      - $ref: '#/components/schemas/ItemResultOfNotification'
       - type: object
         additionalProperties: false
         properties:
@@ -337,7 +378,7 @@ components:
             type: integer
             format: int32
             nullable: true
-    ResultsOfNotification:
+    ItemResultOfNotification:
       type: object
       additionalProperties: false
       properties:
@@ -389,7 +430,29 @@ components:
           type: string
           format: date-time
           nullable: true
-    ResultsOfSearchResultItem:
+    ItemResultOfOrganization:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+        totalCount:
+          type: integer
+          format: int32
+    Organization:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        friendlyName:
+          type: string
+          nullable: true
+    ItemResultOfSearchResultItem:
       type: object
       additionalProperties: false
       properties:
@@ -437,7 +500,7 @@ components:
           type: string
         password:
           type: string
-    ResultsOfWidget:
+    ItemResultOfWidget:
       type: object
       additionalProperties: false
       properties:
