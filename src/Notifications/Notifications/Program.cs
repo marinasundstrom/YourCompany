@@ -19,6 +19,8 @@ using YourBrand.Notifications.Infrastructure;
 using YourBrand.Notifications.Infrastructure.Persistence;
 using YourBrand.Tenancy;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 string ServiceName = "Notifications";
@@ -46,6 +48,23 @@ builder.Services.AddProblemDetails();
 var configuration = builder.Configuration;
 
 var services = builder.Services;
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("https://yourbrand.local:5174", "https://*.yourbrand.local:5174")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader()
+                            .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                            .Build();
+                      });
+});
+
 
 services.AddApplication(configuration);
 services.AddInfrastructure(configuration);
@@ -112,6 +131,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -66,8 +66,13 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("https://localhost:5174", "https://localhost:5001")
                             .AllowAnyHeader().AllowAnyMethod();
 
-                          policy.WithOrigins("https://yourbrand.local", "https://*.yourbrand.local")
-                            .SetIsOriginAllowedToAllowWildcardSubdomains();
+                          policy
+                              .SetIsOriginAllowedToAllowWildcardSubdomains()
+                              .WithOrigins("https://yourbrand.local:5174", "https://*.yourbrand.local:5174")
+                              .AllowAnyOrigin()
+                              .AllowAnyHeader()
+                              .AllowAnyMethod()
+                              .SetPreflightMaxAge(TimeSpan.FromSeconds(2520));
                       });
 });
 

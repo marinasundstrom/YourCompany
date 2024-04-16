@@ -57,10 +57,12 @@ builder.Services.AddCors(options =>
                       builder =>
                       {
                           builder
+                              .SetIsOriginAllowedToAllowWildcardSubdomains()
+                              .WithOrigins("https://yourbrand.local:5174", "https://*.yourbrand.local:5174")
                               .AllowAnyOrigin()
                               .AllowAnyHeader()
                               .AllowAnyMethod()
-                              .SetIsOriginAllowedToAllowWildcardSubdomains();
+                              .SetPreflightMaxAge(TimeSpan.FromSeconds(2520));
                       });
 });
 

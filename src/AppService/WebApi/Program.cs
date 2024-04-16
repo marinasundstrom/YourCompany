@@ -25,7 +25,6 @@ using YourBrand.WebApi.Hubs;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 string ServiceName = "AppService";
@@ -85,16 +84,20 @@ services.AddAzureClients(builder =>
 
 services.AddSignalR();
 
-services.AddCors(options =>
+builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
-                    builder =>
-                    {
-                        builder
-                            .AllowAnyOrigin()
+                      builder =>
+                      {
+                          builder
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("https://yourbrand.local:5174", "https://*.yourbrand.local:5174")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
                             .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
+                            .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                            .Build();
+                      });
 });
 
 services.AddSingleton<IUserIdProvider, EmailBasedUserIdProvider>();

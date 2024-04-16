@@ -48,6 +48,24 @@ builder.Services.AddObservability(ServiceName, ServiceVersion, builder.Configura
 
 builder.Services.AddProblemDetails();
 
+string MyAllowSpecificOrigins = "MyPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .WithOrigins("https://yourbrand.local:5174", "https://*.yourbrand.local:5174")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader()
+                            .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                            .Build();
+                      });
+});
+
 var services = builder.Services;
 
 var configuration = builder.Configuration;
@@ -132,6 +150,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();
